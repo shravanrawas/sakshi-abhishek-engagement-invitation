@@ -73,6 +73,14 @@ function Index() {
               </span>
             </div>
           </div>
+
+          {/* Scroll indicator */}
+          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 animate-bounce-scroll">
+            <span className="font-display text-[10px] tracking-[0.3em] text-[color:var(--henna)]">SCROLL</span>
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-[color:var(--maroon)]">
+              <path d="M12 5v14M5 12l7 7 7-7" />
+            </svg>
+          </div>
         </section>
 
         {/* GANESH BLESSING */}
