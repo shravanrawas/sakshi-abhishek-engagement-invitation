@@ -222,3 +222,9 @@
   animation: shimmer 4s ease-in-out infinite;
 }
 .animate-reveal { animation: reveal-up 1s ease-out both; }
+
+@keyframes bounce-scroll {
+  0%, 100% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(12px); opacity: 0.6; }
+}
+.animate-bounce-scroll { animation: bounce-scroll 1.8s ease-in-out infinite; }
