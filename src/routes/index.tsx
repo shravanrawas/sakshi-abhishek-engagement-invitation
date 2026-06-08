@@ -2,6 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import mandala from "@/assets/mandala.png";
 import heroCouple from "@/assets/hero-couple.jpg";
 import diya from "@/assets/diya.png";
+import { Countdown } from "@/components/Countdown";
 import { FallingPetals } from "@/components/FallingPetals";
 
 export const Route = createFileRoute("/")({
@@ -91,6 +92,9 @@ function Index() {
             </p>
           </div>
         </section>
+
+        {/* COUNTDOWN */}
+        <Countdown />
 
         {/* COUPLE IMAGE */}
         <section className="relative py-24 px-6">
