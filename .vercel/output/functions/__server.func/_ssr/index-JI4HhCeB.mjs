@@ -1,7 +1,56 @@
-import { j as jsxRuntimeExports } from "../_libs/react.mjs";
+import { j as jsxRuntimeExports, r as reactExports } from "../_libs/react.mjs";
 const mandala = "/assets/mandala-BOhiDTCa.png";
 const heroCouple = "/assets/hero-couple-oEN1AHQZ.jpg";
 const diya = "/assets/diya-CvOohRzz.png";
+const ENGAGEMENT_DATE = /* @__PURE__ */ new Date("2026-06-23T11:30:00+05:30");
+function getTimeLeft() {
+  const diff = ENGAGEMENT_DATE.getTime() - Date.now();
+  if (diff <= 0) {
+    return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+  }
+  return {
+    days: Math.floor(diff / (1e3 * 60 * 60 * 24)),
+    hours: Math.floor(diff / (1e3 * 60 * 60) % 24),
+    minutes: Math.floor(diff / (1e3 * 60) % 60),
+    seconds: Math.floor(diff / 1e3 % 60)
+  };
+}
+const UNITS = [
+  { key: "days", label: "Days" },
+  { key: "hours", label: "Hours" },
+  { key: "minutes", label: "Minutes" },
+  { key: "seconds", label: "Seconds" }
+];
+function Countdown() {
+  const [timeLeft, setTimeLeft] = reactExports.useState(getTimeLeft);
+  const hasArrived = timeLeft.days === 0 && timeLeft.hours === 0 && timeLeft.minutes === 0 && timeLeft.seconds === 0;
+  reactExports.useEffect(() => {
+    const timer = setInterval(() => setTimeLeft(getTimeLeft()), 1e3);
+    return () => clearInterval(timer);
+  }, []);
+  return /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "relative py-24 px-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-4xl mx-auto text-center", children: [
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-display text-xs tracking-[0.4em] text-[color:var(--henna)]", children: "COUNTING DOWN TO" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("h2", { className: "font-script text-6xl md:text-7xl text-[color:var(--maroon)] mt-2", children: "Our Special Day" }),
+    /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "flex items-center justify-center gap-3 mt-4 mb-12", children: [
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-px w-12 bg-[color:var(--gold)]" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "text-[color:var(--gold)]", children: "✦" }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "h-px w-12 bg-[color:var(--gold)]" })
+    ] }),
+    hasArrived ? /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "font-script text-5xl md:text-6xl text-[color:var(--maroon)] animate-reveal", children: "The celebration has begun!" }) : /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6", children: UNITS.map(({ key, label }) => /* @__PURE__ */ jsxRuntimeExports.jsxs(
+      "div",
+      {
+        className: "relative bg-card/80 backdrop-blur rounded-2xl p-6 md:p-8 border border-[color:var(--gold)]/40 shadow-gold",
+        children: [
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-display text-4xl md:text-5xl text-[color:var(--maroon-deep)] tabular-nums", children: String(timeLeft[key]).padStart(2, "0") }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "my-3 h-px bg-[color:var(--gold)]/50" }),
+          /* @__PURE__ */ jsxRuntimeExports.jsx("span", { className: "font-display text-xs md:text-sm tracking-[0.25em] text-[color:var(--henna)]", children: label })
+        ]
+      },
+      key
+    )) }),
+    /* @__PURE__ */ jsxRuntimeExports.jsx("p", { className: "mt-10 font-display text-sm tracking-[0.2em] text-[color:var(--henna)]", children: "23 JUNE 2026 · 11:30 AM" })
+  ] }) });
+}
 function FallingPetals() {
   const petals = Array.from({ length: 18 });
   return /* @__PURE__ */ jsxRuntimeExports.jsx("div", { className: "pointer-events-none fixed inset-0 overflow-hidden z-0", children: petals.map((_, i) => {
@@ -69,6 +118,7 @@ function Index() {
           "AND OUR BELOVED FAMILIES"
         ] })
       ] }) }),
+      /* @__PURE__ */ jsxRuntimeExports.jsx(Countdown, {}),
       /* @__PURE__ */ jsxRuntimeExports.jsx("section", { className: "relative py-24 px-6", children: /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "max-w-4xl mx-auto", children: [
         /* @__PURE__ */ jsxRuntimeExports.jsxs("div", { className: "relative rounded-3xl overflow-hidden shadow-deep border-4 border-[color:var(--gold)]/60", children: [
           /* @__PURE__ */ jsxRuntimeExports.jsx("img", { src: heroCouple, alt: "Sakshi and Abhishek", className: "w-full h-auto" }),
