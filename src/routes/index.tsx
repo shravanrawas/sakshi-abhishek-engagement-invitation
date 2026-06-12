@@ -1,9 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { useRef } from "react";
 import mandala from "@/assets/mandala.png";
 import heroCouple from "@/assets/hero-couple.jpg";
 import diya from "@/assets/diya.png";
 import { Countdown } from "@/components/Countdown";
 import { FallingPetals } from "@/components/FallingPetals";
+import { useAutoScroll } from "@/hooks/use-auto-scroll";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -18,8 +20,14 @@ export const Route = createFileRoute("/")({
 });
 
 function Index() {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  useAutoScroll({ delay: 3500, speed: 35, containerRef: scrollRef });
+
   return (
-    <div className="relative min-h-screen paper-texture text-foreground overflow-hidden">
+    <div
+      ref={scrollRef}
+      className="relative h-screen overflow-y-auto overflow-x-hidden paper-texture text-foreground"
+    >
       <FallingPetals />
       <main className="relative z-20">
         {/* HERO */}

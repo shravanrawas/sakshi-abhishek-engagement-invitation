@@ -12,7 +12,7 @@ type TimeLeft = {
 function getTimeLeft(): TimeLeft {
   const diff = ENGAGEMENT_DATE.getTime() - Date.now();
 
-  if (diff <= 0) {
+  if (isNaN(diff) || diff <= 0) {
     return { days: 0, hours: 0, minutes: 0, seconds: 0 };
   }
 
@@ -32,14 +32,18 @@ const UNITS: { key: keyof TimeLeft; label: string }[] = [
 ];
 
 export function Countdown() {
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>(getTimeLeft);
+  const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
   const hasArrived =
+    timeLeft !== null &&
     timeLeft.days === 0 &&
     timeLeft.hours === 0 &&
     timeLeft.minutes === 0 &&
     timeLeft.seconds === 0;
 
   useEffect(() => {
+    // Set client-side initial value immediately on mount
+    setTimeLeft(getTimeLeft());
+
     const timer = setInterval(() => setTimeLeft(getTimeLeft()), 1000);
     return () => clearInterval(timer);
   }, []);
@@ -71,7 +75,7 @@ export function Countdown() {
                 className="relative bg-card/80 backdrop-blur rounded-2xl p-6 md:p-8 border border-[color:var(--gold)]/40 shadow-gold"
               >
                 <span className="font-display text-4xl md:text-5xl text-[color:var(--maroon-deep)] tabular-nums">
-                  {String(timeLeft[key]).padStart(2, "0")}
+                  {timeLeft ? String(timeLeft[key]).padStart(2, "0") : "00"}
                 </span>
                 <div className="my-3 h-px bg-[color:var(--gold)]/50" />
                 <span className="font-display text-xs md:text-sm tracking-[0.25em] text-[color:var(--henna)]">
