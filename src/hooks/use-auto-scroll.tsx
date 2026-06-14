@@ -24,6 +24,7 @@ export function useAutoScroll({
     let paused = false;
     let lastTime = 0;
     let currentScroll = 0;
+    let direction = 1;
 
     const getContainer = () => containerRef.current;
 
@@ -37,7 +38,7 @@ export function useAutoScroll({
         return;
       }
 
-      if (paused || container.scrollTop >= maxScrollY(container) - 2) {
+      if (paused) {
         active = false;
         return;
       }
@@ -46,10 +47,19 @@ export function useAutoScroll({
       const delta = time - lastTime;
       lastTime = time;
 
-      const step = (speed * delta) / 1000;
+      const step = (speed * delta * direction) / 1000;
       currentScroll += step;
-      container.scrollTop = Math.round(currentScroll);
 
+      const maxY = maxScrollY(container);
+      if (currentScroll >= maxY) {
+        currentScroll = maxY;
+        direction = -1;
+      } else if (currentScroll <= 0) {
+        currentScroll = 0;
+        direction = 1;
+      }
+
+      container.scrollTop = Math.round(currentScroll);
       rafId = requestAnimationFrame(tick);
     };
 
@@ -60,6 +70,7 @@ export function useAutoScroll({
       active = true;
       lastTime = 0;
       currentScroll = container.scrollTop;
+      direction = container.scrollTop >= maxScrollY(container) ? -1 : 1;
       rafId = requestAnimationFrame(tick);
     };
 

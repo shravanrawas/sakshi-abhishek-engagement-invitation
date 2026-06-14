@@ -1,10 +1,11 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 import mandala from "@/assets/mandala.png";
 import heroCouple from "@/assets/hero-couple.jpg";
 import diya from "@/assets/diya.png";
 import { Countdown } from "@/components/Countdown";
 import { FallingPetals } from "@/components/FallingPetals";
+import { BackgroundAudio } from "@/components/BackgroundAudio";
 import { useAutoScroll } from "@/hooks/use-auto-scroll";
 
 export const Route = createFileRoute("/")({
@@ -21,7 +22,8 @@ export const Route = createFileRoute("/")({
 
 function Index() {
   const scrollRef = useRef<HTMLDivElement>(null);
-  useAutoScroll({ delay: 3500, speed: 35, containerRef: scrollRef });
+  const [opened, setOpened] = useState(false);
+  useAutoScroll({ delay: opened ? 2000 : 999999, speed: 75, containerRef: scrollRef });
 
   return (
     <div
@@ -30,6 +32,7 @@ function Index() {
     >
       <FallingPetals />
       <main className="relative z-20">
+        <BackgroundAudio />
         {/* HERO */}
         <section className="relative min-h-screen flex flex-col items-center justify-center px-6 pt-32 pb-20 text-center">
           <img
@@ -38,6 +41,31 @@ function Index() {
             aria-hidden
             className="absolute inset-0 m-auto w-[min(90vw,800px)] opacity-20 animate-slow-spin"
           />
+          {!opened ? (
+            <div className="absolute inset-0 z-30 flex items-center justify-center bg-[rgba(12,8,4,0.92)] px-6">
+              <div className="max-w-md rounded-[2.25rem] border-2 border-[color:var(--gold)]/80 bg-[rgba(255,255,255,0.12)] p-10 text-center shadow-[0_50px_120px_-55px_rgba(112,76,41,0.8)] backdrop-blur-2xl">
+                <p className="text-xs uppercase tracking-[0.55em] text-[color:var(--gold)] mb-4">ENGAGEMENT INVITATION</p>
+                <h2 className="font-script text-5xl text-[color:var(--maroon)] mb-4 leading-tight">
+                  
+                  <span className="block text-2xl font-display text-[color:var(--gold-light)] mt-2">Open The Door</span>
+                </h2>
+                <p className="text-sm leading-7 text-[color:var(--gold-light)]/95 mb-10">
+                  आमच्या प्रेमाच्या प्रवासात<br />सहभागी होण्यासाठी स्वागत आहे
+                </p>
+                <p className="text-[0.78rem] uppercase tracking-[0.35em] text-[color:var(--gold)] mb-8">
+                  Tap to begin
+                </p>
+                <button
+                  type="button"
+                  onClick={() => setOpened(true)}
+                  className="inline-flex items-center justify-center rounded-full bg-gradient-to-r from-[color:var(--gold)] to-[color:var(--gold-light)] px-10 py-3 text-sm font-semibold text-[color:var(--maroon-deep)] shadow-lg shadow-[rgba(149,115,16,0.35)] transition-transform duration-300 hover:-translate-y-0.5"
+                >
+                  सुरू करा
+                  
+                </button>
+              </div>
+            </div>
+          ) : null}
           <div className="relative animate-reveal">
             <p className="font-hindi text-2xl md:text-3xl text-[color:var(--maroon)] mb-2">
               ॥ श्री गणेशाय नमः ॥
@@ -46,17 +74,17 @@ function Index() {
               ENGAGEMENT CEREMONY
             </p>
 
-           <h1 className="font-script text-7xl md:text-9xl leading-none text-maroon-700 drop-shadow-sm">
-  Sakshi
-</h1>
+            <h1 className="font-script text-7xl md:text-9xl leading-none text-maroon-700 drop-shadow-sm">
+              Sakshi
+            </h1>
             <div className="flex items-center justify-center gap-4 my-3">
               <span className="h-px w-16 md:w-24 bg-[color:var(--gold)]" />
               <span className="font-display text-xl md:text-2xl text-[color:var(--maroon)]">&amp;</span>
               <span className="h-px w-16 md:w-24 bg-[color:var(--gold)]" />
             </div>
             <h1 className="font-script text-7xl md:text-9xl leading-none text-maroon-700 drop-shadow-sm">
-  Abhishek
-</h1>
+              Abhishek
+            </h1>
 
             <p className="mt-8 max-w-xl mx-auto italic font-bold text-lg md:text-xl text-[color:var(--henna)] leading-relaxed">
               "Two souls, one journey — bound by destiny, blessed by tradition.
@@ -95,7 +123,7 @@ function Index() {
               <span className="h-px flex-1 bg-[color:var(--gold)]/40" />
             </div>
             <p className="font-display tracking-[0.3em] text-sm md:text-base text-[color:var(--gold-light)]/90">
-              WITH THE DIVINE BLESSINGS OF LORD GANESHA<br/>
+              WITH THE DIVINE BLESSINGS OF LORD GANESHA<br />
               AND OUR BELOVED FAMILIES
             </p>
           </div>
@@ -132,7 +160,7 @@ function Index() {
           <div className="grid md:grid-cols-2 gap-8 max-w-6xl mx-auto">
             {[
               { name: "Date", date: "23 june 2026", icon: "🗓️" },
-              { name: "Time",  time: "11:30 AM",  icon: "🕒" },
+              { name: "Time", time: "11:30 AM", icon: "🕒" },
             ].map((e) => (
               <div
                 key={e.name}
@@ -142,8 +170,8 @@ function Index() {
                 <h3 className="font-display text-2xl text-[color:var(--maroon)] tracking-widest">{e.name}</h3>
                 <div className="my-4 h-px bg-[color:var(--gold)]/50" />
                 <p className="font-display text-sm tracking-widest font-bold text-[color:var(--maroon)]/80 mt-1">
-  {e.date}
-</p>
+                  {e.date}
+                </p>
                 <p className="font-display text-sm tracking-widest font-bold text-[color:var(--maroon)]/80 mt-1">{e.time}</p>
               </div>
             ))}
@@ -162,27 +190,27 @@ function Index() {
             </div>
 
             <p className="mt-3 text-lg font-bold opacity-90 leading-relaxed">
-              Shevgaon - Pathardi Road <br/>
+              Shevgaon - Pathardi Road <br />
               Pathardi, Maharashtra
             </p>
 
             <a
-  href="https://www.google.com/maps/place/Arjuna+Lawns/@19.182145,75.1713894,17z"
-  target="_blank"
-  rel="noreferrer"
-  className="inline-block mt-8 px-8 py-3 bg-[color:var(--gold)] text-[color:var(--maroon-deep)] font-display tracking-[0.25em] text-sm rounded-full shadow-gold hover:scale-105 transition-transform"
->
-  📍 VIEW ON MAP
-</a>
+              href="https://maps.google.com/maps?q=Arjuna%20Lawns%20Pathardi&t=&z=17&ie=UTF8&iwloc=&output=embed"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-block mt-8 px-8 py-3 bg-[color:var(--gold)] text-[color:var(--maroon-deep)] font-display tracking-[0.25em] text-sm rounded-full shadow-gold hover:scale-105 transition-transform"
+            >
+              📍 VIEW ON MAP
+            </a>
 
             <div className="mt-12 rounded-2xl overflow-hidden border-2 border-[color:var(--gold)]/50 shadow-deep">
-  <iframe
-    title="Venue location"
-    src="https://maps.google.com/maps?q=Arjuna%20Lawns%20Pathardi&t=&z=17&ie=UTF8&iwloc=&output=embed"
-    className="w-full h-80 grayscale-[0.2] contrast-105"
-    loading="lazy"
-  />
-</div>
+              <iframe
+                title="Venue location"
+                src="https://maps.google.com/maps?q=Arjuna%20Lawns%20Pathardi&t=&z=17&ie=UTF8&iwloc=&output=embed"
+                className="w-full h-80 grayscale-[0.2] contrast-105"
+                loading="lazy"
+              />
+            </div>
           </div>
         </section>
 
@@ -209,8 +237,8 @@ function Index() {
           <div className="max-w-2xl mx-auto bg-gradient-royal text-[color:var(--gold-light)] rounded-3xl p-12 shadow-deep border-2 border-[color:var(--gold)]/50">
             <img src={diya} alt="" aria-hidden className="w-12 h-12 mx-auto animate-flicker" />
             <p className="font-hindi text-2xl mt-4">
-  तुमची उपस्थिती हाच आमच्यासाठी आशीर्वाद आहे
-</p>
+              तुमची उपस्थिती हाच आमच्यासाठी आशीर्वाद आहे
+            </p>
             <h2 className="font-script text-5xl md:text-6xl mt-4 text-[color:var(--gold-light)]">Bless us with your presence</h2>
             <p className="mt-6 opacity-90 leading-relaxed">
               Kindly confirm your attendance so we may welcome you with all our love.
