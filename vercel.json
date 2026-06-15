@@ -1,4 +1,5 @@
 {
   "version": 2,
+  "name": "sakshi-abhishek-wedding-invitation",
   "buildCommand": "npm run build"
 }
