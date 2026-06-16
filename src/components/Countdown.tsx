@@ -32,18 +32,14 @@ const UNITS: { key: keyof TimeLeft; label: string }[] = [
 ];
 
 export function Countdown() {
-  const [timeLeft, setTimeLeft] = useState<TimeLeft | null>(null);
+  const [timeLeft, setTimeLeft] = useState<TimeLeft>(getTimeLeft);
   const hasArrived =
-    timeLeft !== null &&
     timeLeft.days === 0 &&
     timeLeft.hours === 0 &&
     timeLeft.minutes === 0 &&
     timeLeft.seconds === 0;
 
   useEffect(() => {
-    // Set client-side initial value immediately on mount
-    setTimeLeft(getTimeLeft());
-
     const timer = setInterval(() => setTimeLeft(getTimeLeft()), 1000);
     return () => clearInterval(timer);
   }, []);
@@ -75,7 +71,7 @@ export function Countdown() {
                 className="relative bg-card/80 backdrop-blur rounded-2xl p-6 md:p-8 border border-[color:var(--gold)]/40 shadow-gold"
               >
                 <span className="font-display text-4xl md:text-5xl text-[color:var(--maroon-deep)] tabular-nums">
-                  {timeLeft ? String(timeLeft[key]).padStart(2, "0") : "00"}
+                  {String(timeLeft[key]).padStart(2, "0")}
                 </span>
                 <div className="my-3 h-px bg-[color:var(--gold)]/50" />
                 <span className="font-display text-xs md:text-sm tracking-[0.25em] text-[color:var(--henna)]">
